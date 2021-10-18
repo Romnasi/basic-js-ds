@@ -14,7 +14,7 @@ module.exports = class BinarySearchTree {
   add(data) {
     this._root = addWithin(this._root, data);
 
-    function addWithin(node, value) {
+    function addWithin(node, data) {
       if(!node) {
         return new Node(data);
       }
@@ -23,10 +23,10 @@ module.exports = class BinarySearchTree {
         return node;
       }
 
-      if (value < node.value) {
-        node.left = addWithin(node.left, value);
+      if (data < node.data) {
+        node.left = addWithin(node.left, data);
       } else {
-        node.right = addWithin(node.right, value);
+        node.right = addWithin(node.right, data);
       }
 
       return node;
@@ -34,20 +34,21 @@ module.exports = class BinarySearchTree {
   }
 
   has(data) {
-    return searchWithin(this._root, data);
-
-    function searchWithin(node, value) {
-      if (!node && node !== 0) {
+    return searchData(this._root, data)
+    function searchData(node, data) {
+      if (!node) {
         return false;
       }
 
-      if (node.data === value) {
+      if (node.data === data) {
         return true;
       }
-
-      return value < node.data ? 
-        searchWithin(node.left, value) :
-        searchWithin(node.right, value);
+      
+      if (data < node.data) {
+        return searchData(node.left, data);
+      } else {
+        return searchData(node.right, data);
+      }
     }
   }
 
